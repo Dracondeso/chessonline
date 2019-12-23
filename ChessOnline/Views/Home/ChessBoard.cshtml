@@ -1,0 +1,27 @@
+﻿<head>
+    
+<script src="~/js/site.js"type="text/javascript"></script>
+</head>
+<body>
+    <div id="chessBoard" class="center">
+        @for (
+           int i = 8; i > 0; i--)
+        {
+            @for (int j = 1; j < 9; j++)
+            {
+                @if (i % 2 != j % 2)
+                {
+                    <div id="@i-@j" class="boxDark chess">
+                    </div>
+
+                }
+                else
+                {
+                    <div id="@i-@j" class="boxBright chess">
+                    </div>
+
+                }
+            }
+        }
+    </div>
+</body>

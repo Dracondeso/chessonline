@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessOnline", "ChessOnline\ChessOnline.csproj", "{3DBD635D-95F4-4D0F-94AB-CB886BC6B679}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerSocket", "ServerSocket\ServerSocket.csproj", "{81231D4C-2E53-4985-8DE8-E14776EE97CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3DBD635D-95F4-4D0F-94AB-CB886BC6B679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DBD635D-95F4-4D0F-94AB-CB886BC6B679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DBD635D-95F4-4D0F-94AB-CB886BC6B679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DBD635D-95F4-4D0F-94AB-CB886BC6B679}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81231D4C-2E53-4985-8DE8-E14776EE97CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81231D4C-2E53-4985-8DE8-E14776EE97CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81231D4C-2E53-4985-8DE8-E14776EE97CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81231D4C-2E53-4985-8DE8-E14776EE97CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {41B4685B-AC58-41C3-8BCA-FED75A38FD8F}
+	EndGlobalSection
+EndGlobal
