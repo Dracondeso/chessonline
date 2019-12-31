@@ -167,8 +167,10 @@ function cleaner() {
 function move(_id, check) {
     var all = ("movable")
     console.log($("#" + _id));
-    var classe2 = ($("#" + _id));
-    console.log(classe2)
+    var classe2 = ($("#" + _id).classList);
+    var classe3 = ($("#" + _id).classList);
+    console.log(classe2[2]);
+    console.log(classe3[3]);
     $("#" + check).removeClass(all)
     $("#" + check).classList[3].removeClass()
     $("#" + _id).classList[2].removeClass()
