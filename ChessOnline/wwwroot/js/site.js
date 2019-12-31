@@ -81,14 +81,14 @@ function pawnMove(_id) {
     if (!$("#" + check2).hasClass("clicable")) {
         $("#" + check2).addClass("movable");
         $(".movable").click(function () {
-            move(this.id, check2);
+            move(_id, check2);
         });
     }
     if ($("#" + check3).hasClass('clicable ,sign')) {
         $("#" + check3).addClass("movable");
         console.log(check3);
         $(".movable").click(function () {
-            move(this.id, check3);
+            move(_id, check3);
         });
     }
 
@@ -165,10 +165,18 @@ function cleaner() {
     }
 }
 function move(_id, check) {
-    $("#" + check).classList[2] = $("#" + _id).classList[2];
-    console.log($("#" + check));
+    var all = ("movable")
+    console.log($("#" + _id));
+    var classe2 = ($("#" + _id));
+    console.log(classe2)
+    $("#" + check).removeClass(all)
+    $("#" + check).classList[3].removeClass()
+    $("#" + _id).classList[2].removeClass()
+    $("#" + check).classList[3].removeClass()
+        = $("#" + _id).classList[2];
+    console.log($("#" + check).classList[0]);
     $("#" + check).classList[3] = $("#" + _id).classList[3];
-    $("#" + check).removeClass(classList[5], classList[6]);
-    $("#" + _id).removeClass(classList[5], classList[6]);
+    $("#" + check).removeClass(classList[4], classList[5]);
+    $("#" + _id).removeClass(classList[5], classList[5]);
     $("#" + check).addClass("clicable");
 }
