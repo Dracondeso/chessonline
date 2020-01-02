@@ -69,6 +69,9 @@
     vertical-align: middle;
 }
 
+.firstMove {
+}
+
 .White {
 }
 
@@ -145,6 +148,9 @@
 
 .clicked {
     border: 3px solid red;
+}
+.eatable {
+    border: 3px solid blue;
 }
 
 

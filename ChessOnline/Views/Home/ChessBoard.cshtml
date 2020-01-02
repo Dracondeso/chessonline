@@ -4,20 +4,19 @@
 </head>
 <body>
     <div id="chessBoard" class="center">
-        @for (
-           int i = 8; i > 0; i--)
+        @for (int a = 8; a > 0; a--)
         {
-            @for (int j = 1; j < 9; j++)
+            @for (int b = 1; b < 9; b++)
             {
-                @if (i % 2 != j % 2)
+                @if (a % 2 != b % 2)
                 {
-                    <div id="@(i)-@(j)" class="boxDark chess">
+                    <div id="@(a)-@(b)" class="boxDark chess">
                     </div>
 
                 }
                 else
                 {
-                    <div id="@(i)-@(j)" class="boxBright chess">
+                    <div id="@(a)-@(b)" class="boxBright chess">
                     </div>
 
                 }
