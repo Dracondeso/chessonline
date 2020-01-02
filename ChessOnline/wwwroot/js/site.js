@@ -165,13 +165,13 @@ function cleaner() {
     }
 }
 function move(_id, check) {
-    var all = ("movable")
+    var all = ('movable', 'clicable', 'White', 'Black', 'WhitePawn', 'BlackPaw', 'WhiteBishop', 'BlackBishop', 'WhiteKnight', 'BlackKnight', 'WhiteRook', 'BlackRook', 'WhiteQueen', 'BlackQueen', 'WhiteKing', 'BlackKing');
     console.log($("#" + _id));
-    var classe2 = ($("#" + _id).classList);
-    var classe3 = ($("#" + _id).classList);
-    console.log(classe2[2]);
-    console.log(classe3[3]);
-    $("#" + check).removeClass(all)
+    var classe2 = ($("#" + _id)[0].classList[2]);
+    var classe3 = ($("#" + _id)[0].classList[3]);
+    console.log(classe2);
+    console.log(classe3);
+    $("#" + check).removeClass(...all)
     $("#" + check).classList[3].removeClass()
     $("#" + _id).classList[2].removeClass()
     $("#" + check).classList[3].removeClass()
