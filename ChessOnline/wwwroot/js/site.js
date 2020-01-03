@@ -1,14 +1,22 @@
-﻿$(document).ready(function () {
-    console.log('ok funziona');
+﻿var start;
+var check;
+$(document).ready(function () {
     chessInitialize();
-    console.log("siamo prima dell'onclick")
 
-    $(".clicable").click(function () {
-        cleaner();
-        pieceChosen(this.classList[3], this.id);
-    })
-        ;
-
+    $(".chess").click(function () {
+        if ($("#" + this.id).hasClass("clicable")) {
+            cleaner();
+            start = this.id;
+            pieceChosen(start);
+            console.log("primo giro");
+        }
+        if ($("#" + this.id).hasClass("movable")) {
+            check = this.id;
+            move(start, check);
+            console.log("secondo giro");
+            start = check;
+        }
+    });
 });
 function chessInitialize() {
     $("#1-1").addClass("White WhiteRook clicable firstMove");
@@ -44,169 +52,131 @@ function chessInitialize() {
     $("#8-7").addClass("Black BlackKnight clicable firstMove");
     $("#8-8").addClass("Black BlackRook clicable firstMove");
 
-}
-function north(_id) {
-    var position = _id.split("-");
-    var j = 0;
-    if (($("#" + _id).hasClass("WhitePawn")) || ($("#" + _id).hasClass("WhiteKing, BlackKing"))) {
-        j = 6;
-    }
-    if ($("#" + _id).hasClass("WhitePawn, firstMove")) {
-        j = 5;
-    }
 
-    for (i = j; i < 8; i++) {
-            var check = (parseInt(position[0]) + (8 - i)) + "-" + (parseInt(position[1]));
-        if (!($("#" + check).hasClass("clicable"))) {
-            var pieceType = ($("#" + _id)[0].classList[2]);
-            statAssigner(check, pieceType);
-            $(".movable").click(function () {
-                move(_id, check);
-            })
-        }
-        else {
-            if (($("#" + _id)[0].classList[2]) == ($("#" + check)[0].classList[2])) {
-                break;
-            }
-            else {
-                statAssigner(check, pieceType);
-                $(".movable").click(function () {
-                    move(_id, check);
-                })
-            }
-        }
+} //Place the chess pieces on board
+function north(start) {
+    var position = start.split("-");
+    var j = 8 - (parseInt(position[0]));
+    if ($("#" + start).hasClass("WhitePawn") || $("#" + start).hasClass("WhiteKing BlackKing")) {
+        j = 2;
     }
-}
-
-            //if (($("#" + check).hasClass("clicable")) && ($("#" + _id)[0].classList[2]) != ($("#" + check)[0].classList[2])) {
-            //    console.log("pezzo trovato");
-            //    break;
-            //    if (($("#" + check).hasClass("clicable")) && $("#" + check)[0].classList[2] == $("#" + _id)[0].classList[2]) {
-            //        break
-            //    }
-            //}
-function south(_id) {
-    var position = _id.split("-");
-    console.log("questo1",position)
-    var j = 8;
-    if (($("#" + _id).hasClass("BlackPawn")) || ($("#" + _id).hasClass("WhiteKing, BlackKing"))) {
+    if ($("#" + start).hasClass("WhitePawn firstMove")) {
         j = 3;
     }
-    console.log("2", j)
-    if ($("#" + _id).hasClass("BlackPawn, firstMove")) {
-        j = 4;
-    }
-    for (i = j; i > 0; i--) {
-        var check = (parseInt(position[0]) + (8 - i)) + "-" + (parseInt(position[1]));
-        if (!($("#" + check).hasClass("clicable"))) {
-            var pieceType = ($("#" + _id)[0].classList[2]);
-            statAssigner(check, pieceType);
-            $(".movable").click(function () {
-                move(_id, check);
-            console.log(check);
-            })
+    for (i = 1; i < (j); i++) {
+        var check = (parseInt(position[0]) + i) + "-" + (parseInt(position[1]));
+        if ($("#" + check).hasClass("clicable")) {
+            i = 8;
         }
-        else {
-            if (($("#" + _id)[0].classList[2]) == ($("#" + check)[0].classList[2])) {
-                break;
-            }
-            else {
-                statAssigner(check, pieceType);
-                $(".movable").click(function () {
-                    move(_id, check);
-                })
-            }
-        }
+        console.log(check, start)
+        statAssigner(check, start);
     }
-}
-function pawnMove(_id) {
-    if ($("#" + _id).hasClass("White")) {
-        north(_id);
+} function south(start) {
+    var position = start.split("-");
+    var j = (parseInt(position[0]));
+    if ($("#" + start).hasClass("BlackPawn") || $("#" + start).hasClass("WhiteKing, BlackKing")) {
+
+        j = 6;
+
+    }
+    if ($("#" + start).hasClass("WhitePawn, firstMove")) {
+        j = 5;
+
+    }
+
+    for (i = 8; i > (j); i--) {
+        var check = (j - (8 - i)) + "-" + (parseInt(position[1]));
+        if ($("#" + check).hasClass("clicable")) {
+            i = j;
+        }
+        statAssigner(check, start);
+    }
+
+}//find box to south
+function pawnMove(start) {
+    if ($("#" + start).hasClass("White")) {
+        north(start);
     }
     else {
-        south(_id);
-        console.log("nero")
+        south(start);
     }
-    move()
-}
-function bishopMove(_id) {
-    northEast(_id);
-    northWest(_id);
-    southEast(_id);
-    southWest(_id);
-}
-function rookMove(_id) {
-    north(_id);
-    east(_id);
-    west(_id);
-    south(_id);
-}
-function knightMove(_id) {
-    var position = _id.split('-');
-    console.log(position)
-    statAssigner($("#" + ((position[0] + 1) + "-" + (position[1] + 2))), ($("#" + _id)[0].classList[2]));
-    statAssigner($("#" + ((position[0] + 2) + "-" + (position[1] + 1))), ($("#" + _id)[0].classList[2]));
-    statAssigner($("#" + ((position[0] + 1) + "-" + (position[1] - 2))), ($("#" + _id)[0].classList[2]));
-    statAssigner($("#" + ((position[0] + 2) + "-" + (position[1] - 1))), ($("#" + _id)[0].classList[2]));
-    statAssigner($("#" + ((position[0] - 1) + "-" + (position[1] - 2))), ($("#" + _id)[0].classList[2]));
-    statAssigner($("#" + ((position[0] - 2) + "-" + (position[1] - 1))), ($("#" + _id)[0].classList[2]));
-    statAssigner($("#" + ((position[0] - 1) + "-" + (position[1] + 2))), ($("#" + _id)[0].classList[2]));
-    statAssigner($("#" + ((position[0] - 2) + "-" + (position[1] + 1))), ($("#" + _id)[0].classList[2]));
+}//Rule for pawn move
+function bishopMove(start) {
+    northEast(start);
+    northWest(start);
+    southEast(start);
+    southWest(start);
+}//Rule for bnishop move
+function rookMove(start) {
+        north(start);
+      //  south(start);
+}//Rule for rook move
+function knightMove(start) {
+    var position = start.split('-');
+    statAssigner(((parseInt(position[0]) + 1) + "-" + (parseInt(position[1]) + 2)), start);
+    statAssigner(((parseInt(position[0]) + 2) + "-" + (parseInt(position[1]) + 1)), start);
+    statAssigner(((parseInt(position[0]) + 1) + "-" + (parseInt(position[1]) - 2)), start);
+    statAssigner(((parseInt(position[0]) + 2) + "-" + (parseInt(position[1]) - 1)), start);
+    statAssigner(((parseInt(position[0]) - 1) + "-" + (parseInt(position[1]) - 2)), start);
+    statAssigner(((parseInt(position[0]) - 2) + "-" + (parseInt(position[1]) - 1)), start);
+    statAssigner(((parseInt(position[0]) - 1) + "-" + (parseInt(position[1]) + 2)), start);
+    statAssigner(((parseInt(position[0]) - 2) + "-" + (parseInt(position[1]) + 1)), start);
 
-}
-function queenMove(_id) {
-    bishopMove(_id)
-    rookMove(_id)
-}
-function kingMove(_id) {
-    queenMove(_id)
-    castlingMove(_id)
-}
-function pieceChosen(pieceType, _id) {
-    $("#" + _id).removeClass("clicable");
-    $("#" + _id).addClass("clicked");
+}//Rule for knight move
+function queenMove(start) {
+    bishopMove(start)
+    rookMove(start)
+}//Rule for queen move
+function kingMove(start) {
+    queenMove(start)
+    castlingMove(start)
+}//Rule for king move
+function pieceChosen(start) {
+    $("#" + start).removeClass("clicable");
+    $("#" + start).addClass("clicked");
+
+    var pieceType = $("#" + start)[0].classList[3]
     switch (pieceType) {
         case 'BlackPawn':
-            pawnMove(_id);
+            pawnMove(start);
             break;
         case 'WhitePawn':
-            pawnMove(_id);
+            pawnMove(start);
             break;
         case 'WhiteBishop':
 
-            bishopMove(_id);
+            bishopMove(start);
             break;
         case 'BlackBishop':
-            bishopMove(_id);
+            bishopMove(start);
             break;
         case 'WhiteKnight':
-            knightMove(_id);
-            console.log("try");
+            knightMove(start);
         case 'BlackKnight':
-            knightMove(_id);
+            knightMove(start);
             break;
         case 'WhiteRook':
-            rookMove(_id);
+            rookMove(start);
             break;
         case 'BlackRook':
-            rookMove(_id);
+            rookMove(start);
             break;
         case 'WhiteQueen':
-            queenMove(_id);
+            queenMove(start);
             break;
         case 'BlackQueen':
-            queenMove(_id);
+            queenMove(start);
             break;
         case 'WhiteKing':
-            kingMove(_id);
+            kingMove(start);
             break;
         case 'BlackKing':
-            kingMove(_id);
+            kingMove(start);
             break;
         default:
             break;
     }
-}
+}//find the piece on box clicked
 function cleaner() {
     for (var i = 8; i > 0; i--) {
         for (var j = 1; j < 9; j++) {
@@ -214,105 +184,45 @@ function cleaner() {
             if ($("#" + position).hasClass("clicked")) {
                 $("#" + position).removeClass("clicked");
                 $("#" + position).addClass("clicable");
+
+
             }
             if ($("#" + position).hasClass("movable")) {
                 $("#" + position).removeClass("movable");
+
             }
             if ($("#" + position).hasClass("eatable")) {
                 $("#" + position).removeClass("eatable");
                 $("#" + position).addClass("clicable");
+
             }
 
         }
     }
-}
-function move(_id, check) {
+}//clean assigned class
+function move(start, check) {
     const clean = ['firstMove', 'movable', 'clicked', 'clicable', 'White', 'Black', 'WhitePawn', 'BlackPawn', 'WhiteBishop', 'BlackBishop', 'WhiteKnight', 'BlackKnight', 'WhiteRook', 'BlackRook', 'WhiteQueen', 'BlackQueen', 'WhiteKing', 'BlackKing'];
-    var classe2 = $("#" + _id)[0].classList[2];
-    var classe3 = $("#" + _id)[0].classList[3];
+    var classe2 = $("#" + start)[0].classList[2];
+    var classe3 = $("#" + start)[0].classList[3];
     $("#" + check).removeClass(clean);
     $("#" + check).addClass(classe2);
     $("#" + check).addClass(classe3);
     $("#" + check).addClass('clicable');
-    $("#" + _id).removeClass(clean);
-    $("#" + check).addClass('clicable');
-    console.log(_id);
-    console.log(check);
-    console.log(classe2);
+    $("#" + start).removeClass(clean);
     cleaner();
-}
-function statAssigner(check, side) {
-    if (!($("#" + check).hasClass("clicable"))) {
-        $("#" + check).addClass("movable");
+
+}//assign and remove classes for movement
+function statAssigner(check, start) {
+    var temp = start.split("-")
+    if ((0 < temp[0] < 8) && (0 < temp[1] < 8)) {
+        if (!(($("#" + check).hasClass("clicable")) && ($("#" + start)[0].classList[3] == "WhitePawn , BlackPawn"))) {
+            if (!($("#" + check).hasClass("clicable"))) {
+                $("#" + check).addClass("movable");
+            }
+            if (($("#" + check).hasClass("clicable")) && ($("#" + check)[0].classList[2] != $("#" + start)[0].classList[2])) {
+                $("#" + check).removeClass("clicable");
+                $("#" + check).addClass("eatable");
+            }
+        }
     }
-    if ($("#" + check)[0].classList[2] != side) {
-        $("#" + check).removeClass("clicable");
-        $("#" + check).addClass("eatable");
-    }
-}
-
-
-
-//function pawnMove(_id) {
-//    console.log(_id);
-//    $("#" + _id).removeClass("clicable");
-//    $("#" + _id).addClass("clicked");
-//    var position = _id.split("-");
-//    if ($("#" + _id).hasClass("White")) {
-//        var sign = '+'
-//        var start = 2;
-//    }
-//    if ($("#" + _id).hasClass("Black")) {
-//        var sign = '-';
-//        var start = 7;
-//    }
-//    switch (sign) {
-//        case "+":
-//            var check1 = (parseInt(position[0]) + 2) + "-" + (parseInt(position[1]));
-//            var check2 = (parseInt(position[0]) + 1) + "-" + (parseInt(position[1]));
-//            var check3 = (parseInt(position[0]) + 1) + "-" + (parseInt(position[1]) - 1);
-//            var check4 = (parseInt(position[0]) + 1) + "-" + (parseInt(position[1]) + 1);
-//            sign = "Black";
-//            console.log("pezzo bianco");
-//            break;
-//        case "-":
-//            var check1 = (parseInt(position[0]) - 2) + "-" + (parseInt(position[1]));
-//            var check2 = (parseInt(position[0]) - 1) + "-" + (parseInt(position[1]));
-//            var check3 = (parseInt(position[0]) - 1) + "-" + (parseInt(position[1]) - 1);
-//            var check4 = (parseInt(position[0]) - 1) + "-" + (parseInt(position[1]) + 1);
-//            sign = "White";
-//            console.log("pezzo nero");
-//            break;
-//        default:
-//            break;
-//    }
-//    if (!$("#" + check2).hasClass("clicable")) {
-//        $("#" + check2).addClass("movable");
-//        $(".movable").click(function () {
-//            check = check2
-//        });
-//    }
-//    if ($("#" + check3).hasClass('clicable ,sign')) {
-//        $("#" + check3).addClass("movable");
-//        $(".movable").click(function () {
-//            check = check3
-//        });
-//    }
-
-//    if ($("#" + check4).hasClass('clicable ,sign')) {
-//        $("#" + check4).addClass("movable");
-//        $(".movable").click(function () {
-//            check = check4
-//        });
-//    }
-
-//    if (position[0] == start) {
-//        if (!$("#" + check1).hasClass($('clicable'))) {
-//            $("#" + check1).addClass("movable");
-//            $(".movable").click(function () {
-//                check = check1
-//            });
-//        }
-//    }
-//    move(_id, check);
-//}
+}//assign if is movable or eatable
