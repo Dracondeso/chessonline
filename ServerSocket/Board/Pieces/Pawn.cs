@@ -8,15 +8,18 @@ namespace ServerSocket.Board.Pieces
     {
         string PositionX;
         string PositionY;
-        Pawn (string positionX, string positionY)
+        public Pawn(string positionX, string positionY)
         {
             this.PositionX = positionX;
             this.PositionY = positionY;
-            public void Move()
-                {
-                if (Board)
-            }
+
         }
-        
+        public void Move()
+        {
+            //if (Board)
+            //{
+            //}
+
+        }
     }
 }

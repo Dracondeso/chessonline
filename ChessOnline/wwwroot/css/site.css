@@ -1,65 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-    for details on configuring this project to bundle and minify static web assets. */
-/*
-
-    a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-    }
-
-    
-    html {
-    font-size: 14px;
-    }
-
-    @media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-    }
-
-    .border-top {
-    border-top: 1px solid #e5e5e5;
-    }
-
-    .border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-    }
-
-    .box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-    }
-
-    button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
-    }
-
-    /* Sticky footer styles
-    -------------------------------------------------- 
-    html {
-    position: relative;
-    min-height: 100%;
-    }
-
-    body {
-    margin-bottom: 60px;
-    }
-    /* Margin bottom by footer height 
-
-    .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    /* Set the fixed height of the footer here 
-    height: 60px;
-    line-height: 60px; /* Vertically center the text there 
-    }
-    */
-
-.chess {
+﻿.chess {
     float: left;
     width: 80px;
     height: 80px;
@@ -68,121 +7,84 @@
     display: table-cell;
     vertical-align: middle;
 }
-
 .firstMove {
 }
-
 .White {
 }
-
 .Black {
 }
-
 .WhitePawn {
     content: url('pieces/WhitePawn.png');
 }
-
-
 .BlackPawn {
     content: url('pieces/BlackPawn.png')
 }
-
-
 .WhiteBishop {
     content: url('pieces/WhiteBishop.png');
 }
-
-
 .BlackBishop {
     content: url('pieces/BlackBishop.png')
 }
-
-
 .WhiteKnight {
     content: url('pieces/WhiteKnight.png');
 }
-
-
 .BlackKnight {
     content: url('pieces/BlackKnight.png')
 }
-
-
 .WhiteRook {
     content: url('pieces/WhiteRook.png');
 }
-
-
 .BlackRook {
     content: url('pieces/BlackRook.png')
 }
-
-
 .WhiteQueen {
     content: url('pieces/WhiteQueen.png');
 }
-
-
 .BlackQueen {
     content: url('pieces/BlackQueen.png')
 }
-
-
 .WhiteKing {
     content: url('pieces/WhiteKing.png');
 }
-
-
 .BlackKing {
     content: url('pieces/BlackKing.png')
 }
-
 .clicable {
     cursor: pointer;
 }
-
 .movable {
     border: 3px solid green;
     cursor: pointer;
 }
-
 .clicked {
-    border: 3px solid red;
-}
-.eatable {
     border: 3px solid blue;
 }
-
-
+.eatable {
+    border: 3px solid red;
+}
+.castling {
+    border: 3px solid violet;
+    cursor: pointer;
+}
 #chessBoard {
     width: 642px;
     height: 642px;
     border: 1px solid black;
 }
-
 .center {
     position: relative;
     left: 50%;
     transform: translate(-50%);
 }
-
 .boxDark {
     padding: 0px;
     width: 80px;
     height: 80px;
     background-color: #ff6a00
 }
-
 .boxBright {
     padding: 0px;
     width: 80px;
     height: 80px;
     background-color: #fdf5e6
-}
-
-.boxChosen {
-    padding: 0px;
-    width: 80px;
-    height: 80px;
-    background-color: #ff6a00
 }
