@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Board.Pieces
+namespace Server.Board.Pieces.moves
 {
-    class Horse
+    class moves
     {
     }
 }

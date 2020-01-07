@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServerSocket.Board.Pieces
+namespace Server.Board.Pieces
 {
     class Queen
     {

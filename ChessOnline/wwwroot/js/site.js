@@ -379,14 +379,21 @@ function castlingMove(kingPos) {
     cleaner();
 }//assign and remove classes for castling
 function statAssigner(check, start) {
-    var temp = start.split("-");
-    if ((1 < temp[0] < 7) && (1 < temp[1] < 7)) {
+    var first = start.split("-");
+    var second = check.split("-");
+    if ((1 < first[0] < 7) && (1 < first[1] < 7)) {
         if (!($("#" + check).hasClass("clicable"))) {
             $("#" + check).addClass("movable");
         }
-        if ((!(((((temp[0] == (parseInt((check.split("-"))[0]) - 1)) || (temp[0] == (parseInt((check.split("-"))[0]) + 1))) && (temp[1] == (parseInt((check.split("-"))[1])))) || (temp[0] == (parseInt((check.split("-"))[0]) - 2))) && (($("#" + start)[0].classList[3] == "WhitePawn") || ($("#" + start)[0].classList[3] == "BlackPawn"))) && ($("#" + check).hasClass("clicable")) && ($("#" + check)[0].classList[2] != $("#" + start)[0].classList[2]))) {
-            $("#" + check).removeClass("clicable");
-            $("#" + check).addClass("eatable");
+        if ((!(((((first[0] == (parseInt(second[0]) - 1)) || (first[0] == (parseInt(second[0]) + 1))) && (first[1] == (parseInt(second[1])))) || (first[0] == (parseInt(second[0]) - 2)) || (first[0] == (parseInt(second[0]) + 2))) && (($("#" + start)[0].classList[3] == "WhitePawn") || ($("#" + start)[0].classList[3] == "BlackPawn"))) && ($("#" + check).hasClass("clicable")) && ($("#" + check)[0].classList[2] != $("#" + start)[0].classList[2]))) {
+            if (!(($("#" + check).hasClass("WhiteKing")) || $("#" + check).hasClass("BlackKing"))) {
+                $("#" + check).removeClass("clicable");
+                $("#" + check).addClass("eatable");
+            }
+            else {
+                console.log("scacco")
+            }
+
         }
     }
 }//assign if is movable or eatable

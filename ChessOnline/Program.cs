@@ -7,15 +7,24 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
-namespace ChessOnline
+using ChessOnline.Networking;
+using System.Net;
+namespace ChessOnline.Networking
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        private static ClientSocket ClientSocket = new ClientSocket();
+
+        static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            ClientSocket.Connect("192.168.28.10", 6556);
+                while (true)
+            {
+                Console.ReadLine();
+                CreateWebHostBuilder(args).Build().Run();
+            }
         }
+
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
