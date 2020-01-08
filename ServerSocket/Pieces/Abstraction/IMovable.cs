@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Board.Pieces
+namespace Server.Pieces.Abstraction
 {
-    class Horse
+    public interface IMovable
     {
+        void Move();
     }
 }
