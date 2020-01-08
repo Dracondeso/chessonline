@@ -30,6 +30,22 @@ namespace Server
             factory.Build(Enum.PieceType.Knight2, Enum.Side.Black),
             factory.Build(Enum.PieceType.Bishop2, Enum.Side.White),
             factory.Build(Enum.PieceType.Bishop2, Enum.Side.Black),
+            factory.Build(Enum.PieceType.Pawn1, Enum.Side.White),
+            factory.Build(Enum.PieceType.Pawn1, Enum.Side.Black),
+            factory.Build(Enum.PieceType.Pawn2, Enum.Side.White),
+            factory.Build(Enum.PieceType.Pawn2, Enum.Side.Black),
+            factory.Build(Enum.PieceType.Pawn3, Enum.Side.White),
+            factory.Build(Enum.PieceType.Pawn3, Enum.Side.Black),
+            factory.Build(Enum.PieceType.Pawn4, Enum.Side.White),
+            factory.Build(Enum.PieceType.Pawn4, Enum.Side.Black),
+            factory.Build(Enum.PieceType.Pawn5, Enum.Side.White),
+            factory.Build(Enum.PieceType.Pawn5, Enum.Side.Black),
+            factory.Build(Enum.PieceType.Pawn6, Enum.Side.White),
+            factory.Build(Enum.PieceType.Pawn6, Enum.Side.Black),
+            factory.Build(Enum.PieceType.Pawn7, Enum.Side.White),
+            factory.Build(Enum.PieceType.Pawn7, Enum.Side.Black),
+            factory.Build(Enum.PieceType.Pawn8, Enum.Side.White),
+            factory.Build(Enum.PieceType.Pawn8, Enum.Side.Black),
         };
 
 
