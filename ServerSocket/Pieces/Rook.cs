@@ -7,15 +7,19 @@ using System.Text;
 
 namespace Server.Pieces
 {
-    public class Rook : Abstraction.Piece
+    public class Rook : Piece
     {
         public Rook(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
         {
         }
 
-        public override void Move()
+        public void findPiece(Side side, Vector start Position, )
         {
-            throw new NotImplementedException();
+            for (int i=0; i<8; i++)
+            {
+                if()
+            }
         }
+
     }
 }

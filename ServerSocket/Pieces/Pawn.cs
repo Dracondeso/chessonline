@@ -7,15 +7,11 @@ using System.Text;
 
 namespace Server.Pieces
 {
-    public class Pawn : Abstraction.Piece
+    public class Pawn : Piece
     {
         public Pawn(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
         {
         }
 
-        public override void Move()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

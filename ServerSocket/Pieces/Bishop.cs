@@ -7,15 +7,12 @@ using System.Text;
 
 namespace Server.Pieces
 {
-    public class Bishop : Abstraction.Piece
+    public class Bishop : Piece
     {
         public Bishop(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
         {
         }
 
-        public override void Move()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

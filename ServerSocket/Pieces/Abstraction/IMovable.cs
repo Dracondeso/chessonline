@@ -7,5 +7,7 @@ namespace Server.Pieces.Abstraction
     public interface IMovable
     {
         void Move();
+
     }
+
 }

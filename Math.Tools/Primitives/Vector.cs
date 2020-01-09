@@ -14,7 +14,7 @@ namespace Math.Tools.Primitives
         public double X { get; private set; }
         public double Y { get; private set; }
         public Vector Clone() => new Vector(this.X, this.Y);
-        public Vector Update(int x, int y)
+        public Vector Update(double x, double y)
         {
             X = x;
             Y = y;

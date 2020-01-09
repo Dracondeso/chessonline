@@ -7,15 +7,12 @@ using System.Text;
 
 namespace Server.Pieces
 {
-    public class Knight : Abstraction.Piece
+    public class Knight : Piece
     {
         public Knight(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
         {
         }
 
-        public override void Move()
-        {
-            throw new NotImplementedException();
-        }
+   
     }
 }

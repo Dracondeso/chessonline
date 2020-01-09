@@ -7,15 +7,12 @@ using System.Text;
 
 namespace Server.Pieces
 {
-    public class King : Abstraction.Piece
+    public class King : Piece
     {
         public King(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
         {
         }
 
-        public override void Move()
-        {
-            throw new NotImplementedException();
-        }
+     
     }
 }

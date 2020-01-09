@@ -7,15 +7,11 @@ using System.Text;
 
 namespace Server.Pieces
 {
-    public class Queen : Abstraction.Piece
+    public class Queen : Piece
     {
         public Queen(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
         {
         }
 
-        public override void Move()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
