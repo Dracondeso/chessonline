@@ -11,15 +11,13 @@ namespace Server.Pieces
     {
         public Rook(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
         {
+            Move(normalizedStartPosition, 8, 8, 8, 8, 0, 0, 0, 0);
         }
 
-        public void findPiece(Side side, Vector start Position, )
-        {
-            for (int i=0; i<8; i++)
-            {
-                if()
-            }
+    
+
+
         }
 
     }
-}
+

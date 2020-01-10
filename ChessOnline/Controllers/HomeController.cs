@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ChessOnline.Models;
+using ChessOnline.Networking;
 
 namespace ChessOnline.Controllers
 {
@@ -12,6 +13,7 @@ namespace ChessOnline.Controllers
     {
         public IActionResult Index()
         {
+            ClientSocket.StartClient();
             return View();
         }
 

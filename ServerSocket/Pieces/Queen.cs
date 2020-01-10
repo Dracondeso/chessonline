@@ -11,6 +11,8 @@ namespace Server.Pieces
     {
         public Queen(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
         {
+            Move(normalizedStartPosition, 8, 8, 8, 8, 8, 8, 8, 8);
+
         }
 
     }

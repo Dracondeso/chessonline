@@ -11,8 +11,9 @@ namespace Server.Pieces
     {
         public Bishop(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
         {
+            Move(normalizedStartPosition, 0, 0, 0, 0, 8, 8, 8, 8);
         }
 
-      
+
     }
 }

@@ -11,23 +11,15 @@ using ChessOnline.Networking;
 using System.Net;
 namespace ChessOnline.Networking
 {
-    class Program
+      public class Program
     {
-        private static ClientSocket ClientSocket = new ClientSocket();
-
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            ClientSocket.Connect("192.168.28.10", 6556);
-                while (true)
-            {
-                Console.ReadLine();
-                CreateWebHostBuilder(args).Build().Run();
-            }
+            CreateWebHostBuilder(args).Build().Run();
         }
-
-
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
     }
+
 }

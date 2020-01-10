@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Server.Pieces.Abstraction
 {
-    public abstract class Piece : IMovable
+    public abstract class Piece :IMovable
     {
         public Piece(Side side, Vector normalizedStartPosition)
         {
@@ -22,31 +22,42 @@ namespace Server.Pieces.Abstraction
         public bool FirstMove { get; set; }
 
 
-        public bool Move(Vector normalizedPosition, double north, double south, double east, double west, double northEast, double northWest, double southEast, double southWest, Vector pieceMove)
+        public List<Vector> Move(Vector normalizedPosition, double north, double south, double east, double west, double northEast, double northWest, double southEast, double southWest)
         {
             double[] directionpasses = { north, south, east, west, northEast, northWest, southEast, southWest };
             List<Vector> checks = new List<Vector>();
             for (double i = 0; i == 8; i++)
             {
+
                 Enum.Direction direction1 = (Enum.Direction)i;
                 if (directionpasses[(int)i] != 0)
                 {
                     for (double j = 1; j <= directionpasses[(int)i]; j++)
-                        checks.Add(Direction(direction1, normalizedPosition, i));
-                }
-            }
-            foreach (Vector check in checks)
-            {
-                if (check.Equals(pieceMove))
-                {
-                    { return true; }
-                }
-            }
+                    {
+                        if (Board.chessBoard.ContainsKey(Cardinal(direction1, normalizedPosition, i)))
+                        {
+                            Board.chessBoard.TryGetValue(Cardinal(direction1, normalizedPosition, i), out Piece piece);
+                            Board.chessBoard.TryGetValue(normalizedPosition, out Piece piece2);
+                            if ((piece.Side == piece2.Side)||(piece2.Name.Equals(Enum.PieceType.King)))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                checks.Add(Cardinal(direction1, normalizedPosition, i));
+                                break;
+                            }
+                        }
+                        checks.Add(Cardinal(direction1, normalizedPosition, i));
+                    }
 
-            return false;
+
+                }
+            }
+            return checks;
         }
 
-        private Vector Direction(Direction direction, Vector normalizedPosition, double increment)
+        private Vector Cardinal(Direction direction, Vector normalizedPosition, double increment)
         {
             Vector check = new Vector();
             switch (direction)
@@ -54,32 +65,30 @@ namespace Server.Pieces.Abstraction
                 default:
                     throw new NotImplementedException("Unrecognized value.");
                 case Enum.Direction.north:
-                    check.Update(normalizedPosition.X, (normalizedPosition.Y + 1));
+                    check.Update(normalizedPosition.X, (normalizedPosition.Y + increment));
                     return check;
                 case Enum.Direction.south:
-                    check.Update(normalizedPosition.X, (normalizedPosition.Y - 1));
+                    check.Update(normalizedPosition.X, (normalizedPosition.Y - increment));
                     return check;
                 case Enum.Direction.east:
-                    check.Update((normalizedPosition.X + 1), normalizedPosition.Y);
+                    check.Update((normalizedPosition.X + increment), normalizedPosition.Y);
                     return check;
                 case Enum.Direction.west:
-                    check.Update((normalizedPosition.X - 1), normalizedPosition.Y);
+                    check.Update((normalizedPosition.X - increment), normalizedPosition.Y);
                     return check;
                 case Enum.Direction.northEast:
-                    check.Update((normalizedPosition.X + 1), (normalizedPosition.Y + 1));
+                    check.Update((normalizedPosition.X + increment), (normalizedPosition.Y + increment));
                     return check;
                 case Enum.Direction.northWest:
-                    check.Update((normalizedPosition.X - 1), (normalizedPosition.Y + 1));
+                    check.Update((normalizedPosition.X - increment), (normalizedPosition.Y + increment));
                     return check;
                 case Enum.Direction.southEast:
-                    check.Update((normalizedPosition.X + 1), (normalizedPosition.Y - 1));
+                    check.Update((normalizedPosition.X + increment), (normalizedPosition.Y - increment));
                     return check;
                 case Enum.Direction.southWest:
-                    check.Update((normalizedPosition.X - 1), (normalizedPosition.Y - 1));
+                    check.Update((normalizedPosition.X - increment), (normalizedPosition.Y - increment));
                     return check;
-
-
-
             }
         }
     }
+}

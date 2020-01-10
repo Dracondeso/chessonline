@@ -8,7 +8,6 @@ namespace Server
 {
     public static class Program
     {
-        static List<string> pippo = new List<string>();
         private static void Main(String[] args)
         {
            AsynchronousSocketListener.StartListening();
