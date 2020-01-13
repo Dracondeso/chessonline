@@ -13,10 +13,14 @@ namespace ChessOnline.Controllers
     {
         public IActionResult Index()
         {
+            
             ClientSocket.StartClient();
             return View();
         }
-
+        public IActionResult LogIn()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
@@ -30,6 +34,11 @@ namespace ChessOnline.Controllers
         public IActionResult ChessBoard()
         {
             return View();
+        }
+        public void LogInControl(User user)
+        {
+            View("login");
+         //   View("nomeview", eventualeoggetto)
         }
     }
 }
