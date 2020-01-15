@@ -417,23 +417,9 @@ function sendMove(start, check) {
     };
     JSON.stringify(json, false, 4);
 }
-
-function validate() {
-    var username = document.getElementById("uname").value;
-    var password = document.getElementById("psw").value;
-    $.ajax({
-        type: "POST",
-        dataType: "text",
-        url: "https://https://localhost:5001//home/latuaaction",
-        data: {
-            user: username,
-            password: password
-        },
-        success: function (data) {
-            console.log(data);
-        },
-        error: function () {
-            console.log("errore!");
-        }
-    });
+function setCookie(userName, password, H_expiredTime) {
+    var d = new Date();
+    d.setTime(d.getTime() + (H_expiredTime * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = userName + ";" + password + ";" + expires;
 }

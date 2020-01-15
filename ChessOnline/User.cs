@@ -12,12 +12,17 @@ namespace ChessOnline
         public string Password { get; set; }
         public bool IsWhite { get; set; }
         public string RoomKey { get; private set; }
-        public void SetRoomKey(string roomKey)
+        public void SetRoomKey(string roomKey, bool isWhite)
         {
+            this.IsWhite = isWhite;
             this.RoomKey = roomKey;
+        }
+        public override string ToString()
+        {
+            return "UserName= "+ this.UserName + " Password= " + this.Password;
         }
 
 
-     
+
     }
 }
