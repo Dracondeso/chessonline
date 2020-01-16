@@ -9,6 +9,7 @@ using System.Threading;
 
 public class AsynchronousSocketListener
 {
+    public static string DataRead;
     // Thread signal.  
     public static ManualResetEvent allDone = new ManualResetEvent(false);
 
@@ -60,7 +61,7 @@ public class AsynchronousSocketListener
         Console.Read();
 
     }
-
+     
     public static void AcceptCallback(IAsyncResult ar)
     {
         // Signal the main thread to continue.  
@@ -79,7 +80,7 @@ public class AsynchronousSocketListener
 
     public static void ReadCallback(IAsyncResult ar)
     {
-        string content = string.Empty;
+         DataRead = string.Empty;
 
         // Retrieve the state object and the handler socket  
         // from the asynchronous state object.  
@@ -97,15 +98,16 @@ public class AsynchronousSocketListener
 
             // Check for end-of-file tag. If it is not there, read   
             // more data.  
-            content = state.sb.ToString();
-            if (content.IndexOf("<EOF>") > -1)
+            DataRead = state.sb.ToString();
+
+            if (DataRead.IndexOf("<EOF>") > -1)
             {
                 // All the data has been read from the   
                 // client. Display it on the console.  
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                    content.Length, content);
+                    DataRead.Length, DataRead);
                 // Echo the data back to the client.  
-                Send(handler, content);
+                Send(handler, DataRead);
             }
             else
             {

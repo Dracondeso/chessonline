@@ -60,6 +60,6 @@ namespace ChessOnline.Controllers
         {
             return View();
         }
-
+        
     }
 }
