@@ -41,13 +41,10 @@ namespace ChessOnline.Controllers
                 HttpContext.Response.Cookies.Append("AuthCookie", $"{user.UserName}{user.Password}", options);
                 return true;
             }
-
             return false;
         }//Check if exists UserName and Password
         public IActionResult WaitingPage(User user)
         {
-           
-
             return View();
         }
         public IActionResult ChessBoard()

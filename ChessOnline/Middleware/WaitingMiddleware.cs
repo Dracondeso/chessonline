@@ -1,8 +1,10 @@
 ﻿using ChessOnline.Controllers;
+using ChessOnline.Networking;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace ChessOnline
@@ -21,17 +23,17 @@ namespace ChessOnline
 #endif
             if (context.Request.Path == "/home/WaitingPage")
             {
-                return next.Invoke(context);
+                ClientSocket.StartClient();
+                context.Request.Cookies.TryGetValue(CookieKey, out string user);
+      //          ClientSocket.SendMsg(user);
+                context.Response.Redirect(url);
+                
             }
-            else
-            {
-                if (!context.Request.Cookies.ContainsKey(CookieKey))
-                {
-                    context.Response.Redirect(url);
-                }
-            }
-               
+
+
             return next.Invoke(context);
+
+
         }
     }
 }

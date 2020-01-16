@@ -32,6 +32,7 @@ namespace ChessOnline
             });// Configure Policy for cookies 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);//add and set model view control (mvc) version
+            //services.AddScoped<ConnectionStart>();
             services.AddTransient<LogInMiddleware>();//add LogInMiddleware
             services.AddTransient<WaitingMiddleware>();//add WaitingMiddleware
         } // add services at startup
@@ -51,8 +52,9 @@ namespace ChessOnline
             }
             app.UseHttpsRedirection();//Adds middleware fore redirect http request to https
             app.UseStaticFiles();//Enables static file serving for the current request path
-            app.UseCookiePolicy();//Enables cookie policy
-            app.UseMiddleware<LogInMiddleware>();//enable middleware
+            app.UseCookiePolicy();
+            //app.UseMiddleware<ConnectionStart>();
+            app.UseMiddleware<LogInMiddleware>();
             app.UseMiddleware<WaitingMiddleware>();
             app.UseMvc(routes =>
             {
