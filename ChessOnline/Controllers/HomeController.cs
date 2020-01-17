@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ChessOnline.Models;
 using ChessOnline.Networking;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace ChessOnline.Controllers
 {
@@ -38,7 +39,8 @@ namespace ChessOnline.Controllers
                 CookieOptions options = new CookieOptions();
                 options.Expires = DateTime.UtcNow.AddHours(1);
                 options.IsEssential = true;
-                HttpContext.Response.Cookies.Append("AuthCookie", $"{user.UserName}{user.Password}", options);
+                string json = JsonConvert.SerializeObject(user);
+                HttpContext.Response.Cookies.Append("AuthCookie", json, options);
                 return true;
             }
             return false;

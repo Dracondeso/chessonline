@@ -1,18 +1,22 @@
-﻿using Server.Networking;
+﻿using ChessOnline;
+using Newtonsoft.Json;
+using Server.Networking;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 // State object for reading client data asynchronously  
 
 
 public class AsynchronousSocketListener
 {
-    public static string DataRead;
+    public static string CurrentUser;
     // Thread signal.  
     public static ManualResetEvent allDone = new ManualResetEvent(false);
-
+    private static List<Room> Rooms= new List<Room>();
     public AsynchronousSocketListener()
     {
     }
@@ -49,6 +53,7 @@ public class AsynchronousSocketListener
 
                 // Wait until a connection is made before continuing.  
                 allDone.WaitOne();
+
             }
 
         }
@@ -61,7 +66,7 @@ public class AsynchronousSocketListener
         Console.Read();
 
     }
-     
+
     public static void AcceptCallback(IAsyncResult ar)
     {
         // Signal the main thread to continue.  
@@ -80,7 +85,7 @@ public class AsynchronousSocketListener
 
     public static void ReadCallback(IAsyncResult ar)
     {
-         DataRead = string.Empty;
+        string dataRead = string.Empty;
 
         // Retrieve the state object and the handler socket  
         // from the asynchronous state object.  
@@ -98,16 +103,18 @@ public class AsynchronousSocketListener
 
             // Check for end-of-file tag. If it is not there, read   
             // more data.  
-            DataRead = state.sb.ToString();
+            dataRead = state.sb.ToString();
 
-            if (DataRead.IndexOf("<EOF>") > -1)
+            if (dataRead.IndexOf("<EOF>") > -1)
             {
                 // All the data has been read from the   
                 // client. Display it on the console.  
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                    DataRead.Length, DataRead);
+                    dataRead.Length, dataRead);
+                dataRead = Regex.Replace(dataRead, @"<EOF>", "");
+                string  json = JsonConvert.SerializeObject(Elaborate(state.UserCreation(dataRead)));
                 // Echo the data back to the client.  
-                Send(handler, DataRead);
+                Send(handler, json);
             }
             else
             {
@@ -148,4 +155,60 @@ public class AsynchronousSocketListener
             Console.WriteLine(e.ToString());
         }
     }
+    private static User Elaborate(User user)
+    {
+        if (Rooms.Count == 0)
+        {
+        string roomName = "room0"; 
+            Room room1 = new Room(roomName);
+            Rooms.Add(room1);
+        }
+            bool found = false;
+        foreach (Room room in Rooms)
+        {
+            foreach (User userInList in room.Users)
+            {
+                if (userInList.UserName == user.UserName)
+                {
+                    userInList.StartPosition = user.StartPosition;
+                    userInList.EndPosition = user.EndPosition;
+                    found = true;
+                    return userInList;
+                }
+            }
+        }
+        if (!found)
+        {
+            foreach (Room room in Rooms)
+            {
+                foreach (User userInList in room.Users)
+                {
+                    if (userInList.UserName == null)
+                    {
+                        userInList.SetUser(user);
+                        found = true;
+                        return userInList;
+                    }
+                }
+            }
+        }
+        if (!found)
+        { 
+            string roomName = $"room{Rooms.Count + 1}";
+            Room room2 = new Room(roomName);
+            Rooms.Add(room2);
+            foreach (User userInList in room2.Users)
+            {
+                if (userInList.IsWhite)
+                {
+                    userInList.SetUser(user);
+                    return userInList;
+                }
+            }
+        }
+        return user;
+    }
+
+
+
 }

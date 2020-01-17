@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ChessOnline;
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
-
+using Newtonsoft.Json;
 namespace Server.Networking
 {
     public class StateObject
@@ -15,5 +16,12 @@ namespace Server.Networking
         public byte[] buffer = new byte[BufferSize];
         // Received data string.  
         public StringBuilder sb = new StringBuilder();
+    
+        public User UserCreation(string stringToConvert)
+        {
+            User user = JsonConvert.DeserializeObject<User>(stringToConvert);
+            return user;
+        }
     }
+
 }

@@ -22,14 +22,10 @@ namespace ChessOnline
 #endif
             if (context.Request.Path == "/home/WaitingPage")
             {
-                AsynchronousClient.StartClient();
 
-                //ClientSocket.StartClient();
-                //context.Request.Cookies.TryGetValue(CookieKey, out string user);
-                //ClientSocket.SendMsg(user);
                 context.Request.Cookies.TryGetValue(CookieKey, out string loggedUser);
                 AsynchronousClient.Send(AsynchronousClient.StartClient(), loggedUser+"<EOF>");
-
+                AsynchronousClient.StartListening();
                 context.Response.Redirect(url);
 
             }
