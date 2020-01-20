@@ -188,7 +188,7 @@ public class AsynchronousClient
         }
     }
 
-    private static void Receive(Socket client)
+    public static void Receive(Socket client)
     {
         try
         {

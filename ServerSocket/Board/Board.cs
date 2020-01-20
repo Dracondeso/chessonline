@@ -10,15 +10,11 @@ namespace Server
 {
     public class Board
     {
-        public List<User> Users;
-        User WhitePlayer;
-        User BlackPlayer;
         public Dictionary<Vector, Piece> ChessBoard;
         public Board(List<User> users) 
         {
-            this.Users = users;
-            this.WhitePlayer = users[0];
-            this.BlackPlayer = users[1];
+           User WhitePlayer = users[0];
+           User BlackPlayer = users[1];
           Rook rook1 = new Rook( WhitePlayer, new Vector(1,1));
           Knight knight1 = new Knight(WhitePlayer, new Vector(2, 1));
           Bishop bishop1 = new Bishop(WhitePlayer, new Vector(3, 1));

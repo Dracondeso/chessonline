@@ -12,7 +12,12 @@ namespace Server.Pieces
     {
         public King(User user, Vector position) : base(user, position)
         {
-            Move( 1, 1, 1, 1, 1, 1, 1, 1);
+          
+        }
+        public override void Move()
+        {
+            base.Move();
+
         }
 
 

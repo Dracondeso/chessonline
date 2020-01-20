@@ -18,10 +18,17 @@ namespace Server.Networking
         public StringBuilder sb = new StringBuilder();
         User User;
    
-        public User UserCreation(string stringToConvert)
+        public User DeserializedJson(string stringToConvert)
         {
             this.User = JsonConvert.DeserializeObject<User>(stringToConvert);
+            this.User.SetStateObject(this);
             return User;
+        }
+        public string SerializedJson(User user )
+
+        {
+           return JsonConvert.SerializeObject(user);
+
         }
     }
 

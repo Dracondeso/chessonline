@@ -114,7 +114,7 @@ public class AsynchronousSocketListener
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                     dataRead.Length, dataRead);
                 dataRead = Regex.Replace(dataRead, @"<EOF>", "");
-                string  json = JsonConvert.SerializeObject(Core.Elaborate(state.UserCreation(dataRead)));
+              string json= state.SerializedJson(Core.Elaborate(state.DeserializedJson(dataRead)));
                 // Echo the data back to the client.  
                 Send(handler, json);
             }
@@ -127,7 +127,7 @@ public class AsynchronousSocketListener
         }
     }
 
-    private static void Send(Socket handler, string data)
+    public static void Send(Socket handler, string data)
     {
         // Convert the string data to byte data using ASCII encoding.  
         byte[] byteData = Encoding.ASCII.GetBytes(data);
@@ -149,7 +149,6 @@ public class AsynchronousSocketListener
             Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
             handler.Shutdown(SocketShutdown.Both);
-            handler.Close();
 
         }
         catch (Exception e)
@@ -158,5 +157,12 @@ public class AsynchronousSocketListener
         }
     }
 
+    private static void Disconnect(IAsyncResult ar)
+    {
+        Socket handler = (Socket)ar.AsyncState;
+
+        handler.Close();
+
+    }
 
 }
