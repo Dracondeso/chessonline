@@ -398,6 +398,7 @@ function statAssigner(check, start) {
     }
 }//assign if is movable or eatable
 function move(start, check) {
+    
     const clean = ['castling', 'firstMove', 'movable', 'clicked', 'clicable', 'White', 'Black', 'WhitePawn', 'BlackPawn', 'WhiteBishop', 'BlackBishop', 'WhiteKnight', 'BlackKnight', 'WhiteRook', 'BlackRook', 'WhiteQueen', 'BlackQueen', 'WhiteKing', 'BlackKing'];
     var classe2 = $("#" + start)[0].classList[2];
     var classe3 = $("#" + start)[0].classList[3];

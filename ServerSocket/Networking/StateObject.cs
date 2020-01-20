@@ -16,11 +16,12 @@ namespace Server.Networking
         public byte[] buffer = new byte[BufferSize];
         // Received data string.  
         public StringBuilder sb = new StringBuilder();
-    
+        User User;
+   
         public User UserCreation(string stringToConvert)
         {
-            User user = JsonConvert.DeserializeObject<User>(stringToConvert);
-            return user;
+            this.User = JsonConvert.DeserializeObject<User>(stringToConvert);
+            return User;
         }
     }
 

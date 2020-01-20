@@ -1,4 +1,5 @@
-﻿using Math.Tools.Primitives;
+﻿using ChessOnline;
+using Math.Tools.Primitives;
 using Server.Enum;
 using Server.Pieces.Abstraction;
 using System;
@@ -9,9 +10,9 @@ namespace Server.Pieces
 {
     public class Bishop : Piece
     {
-        public Bishop(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
+        public Bishop(User user, Vector Position) : base(user, Position)
         {
-            Move(normalizedStartPosition, 0, 0, 0, 0, 8, 8, 8, 8);
+            Move(0, 0, 0, 0, 8, 8, 8, 8);
         }
 
 

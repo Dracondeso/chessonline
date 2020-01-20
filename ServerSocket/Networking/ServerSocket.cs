@@ -1,6 +1,9 @@
 ﻿using ChessOnline;
+using Math.Tools.Primitives;
 using Newtonsoft.Json;
+using Server;
 using Server.Networking;
+using Server.Pieces.Abstraction;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -16,7 +19,6 @@ public class AsynchronousSocketListener
     public static string CurrentUser;
     // Thread signal.  
     public static ManualResetEvent allDone = new ManualResetEvent(false);
-    private static List<Room> Rooms= new List<Room>();
     public AsynchronousSocketListener()
     {
     }
@@ -112,7 +114,7 @@ public class AsynchronousSocketListener
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                     dataRead.Length, dataRead);
                 dataRead = Regex.Replace(dataRead, @"<EOF>", "");
-                string  json = JsonConvert.SerializeObject(Elaborate(state.UserCreation(dataRead)));
+                string  json = JsonConvert.SerializeObject(Core.Elaborate(state.UserCreation(dataRead)));
                 // Echo the data back to the client.  
                 Send(handler, json);
             }
@@ -155,60 +157,6 @@ public class AsynchronousSocketListener
             Console.WriteLine(e.ToString());
         }
     }
-    private static User Elaborate(User user)
-    {
-        if (Rooms.Count == 0)
-        {
-        string roomName = "room0"; 
-            Room room1 = new Room(roomName);
-            Rooms.Add(room1);
-        }
-            bool found = false;
-        foreach (Room room in Rooms)
-        {
-            foreach (User userInList in room.Users)
-            {
-                if (userInList.UserName == user.UserName)
-                {
-                    userInList.StartPosition = user.StartPosition;
-                    userInList.EndPosition = user.EndPosition;
-                    found = true;
-                    return userInList;
-                }
-            }
-        }
-        if (!found)
-        {
-            foreach (Room room in Rooms)
-            {
-                foreach (User userInList in room.Users)
-                {
-                    if (userInList.UserName == null)
-                    {
-                        userInList.SetUser(user);
-                        found = true;
-                        return userInList;
-                    }
-                }
-            }
-        }
-        if (!found)
-        { 
-            string roomName = $"room{Rooms.Count + 1}";
-            Room room2 = new Room(roomName);
-            Rooms.Add(room2);
-            foreach (User userInList in room2.Users)
-            {
-                if (userInList.IsWhite)
-                {
-                    userInList.SetUser(user);
-                    return userInList;
-                }
-            }
-        }
-        return user;
-    }
-
 
 
 }

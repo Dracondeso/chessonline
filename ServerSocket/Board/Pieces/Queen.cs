@@ -1,4 +1,5 @@
-﻿using Math.Tools.Primitives;
+﻿using ChessOnline;
+using Math.Tools.Primitives;
 using Server.Enum;
 using Server.Pieces.Abstraction;
 using System;
@@ -9,9 +10,9 @@ namespace Server.Pieces
 {
     public class Queen : Piece
     {
-        public Queen(Side side, Vector normalizedStartPosition) : base(side, normalizedStartPosition)
+        public Queen(User user, Vector position) : base(user, position)
         {
-            Move(normalizedStartPosition, 8, 8, 8, 8, 8, 8, 8, 8);
+            Move( 8, 8, 8, 8, 8, 8, 8, 8);
 
         }
 

@@ -17,6 +17,7 @@ namespace ChessOnline.Controllers
         private string DbUser1 = "user1";
         private string DbPsw2 = "1234";
         private string DbUser2 = "user2";
+        public User User;
         public IActionResult LogIn(User user)
         {
             return View();
@@ -62,6 +63,9 @@ namespace ChessOnline.Controllers
         {
             return View();
         }
-        
+        public void move(User user)
+        {
+           // User 
+        }
     }
 }

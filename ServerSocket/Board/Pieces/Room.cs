@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Server;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -8,18 +9,20 @@ namespace ChessOnline
 {
     public class Room
     {
-       public List<User> Users = new List<User>();
         public string Name;
+        public Board Board;
         public Room(string name)
         {
+        List<User> Users = new List<User>();
             this.Name = name;
             User white = new User();
             User black = new User();
-            white.SetRoomKey(this.Name, true);
-            black.SetRoomKey(this.Name, false);
+            white.SetRoomKey(this, Server.Enum.Side.White);
+            black.SetRoomKey(this, Server.Enum.Side.Black);
             Users = new List<User>();
             Users.Add(white);
             Users.Add(black);
+         this.Board= new Board(Users);
         }
     }
 

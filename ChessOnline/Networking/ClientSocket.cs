@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
+using ChessOnline;
 
 // State object for receiving data from remote device.  
 public class StateObject
@@ -19,6 +20,7 @@ public class StateObject
 }
 
 public class AsynchronousClient
+
 {
     // The port number for the remote device.  
     private const int port = 11000;
@@ -51,7 +53,7 @@ public class AsynchronousClient
             // Create a TCP/IP socket.  
             Socket client = new Socket(ipAddress.AddressFamily,
                 SocketType.Stream, ProtocolType.Tcp);
-
+            
             // Connect to the remote endpoint.  
             client.BeginConnect(remoteEP,
                 new AsyncCallback(ConnectCallback), client);
@@ -231,6 +233,7 @@ public class AsynchronousClient
                 if (state.sb.Length > 1)
                 {
                     response = state.sb.ToString();
+                    Console.WriteLine(response);
                 }
                 // Signal that all bytes have been received.  
                 receiveDone.Set();
