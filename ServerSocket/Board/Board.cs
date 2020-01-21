@@ -11,43 +11,44 @@ namespace Server
     public class Board
     {
         public Dictionary<Vector, Piece> ChessBoard;
-        public Board(List<User> users) 
+        public List<User> Users { get; }
+        public User WhitePlayer = new User() ;
+        public User BlackPlayer = new User();
+        public Board(List<User> users)
         {
-           User WhitePlayer = users[0];
-           User BlackPlayer = users[1];
-          Rook rook1 = new Rook( WhitePlayer, new Vector(1,1));
-          Knight knight1 = new Knight(WhitePlayer, new Vector(2, 1));
-          Bishop bishop1 = new Bishop(WhitePlayer, new Vector(3, 1));
-          Queen queen1 = new Queen(WhitePlayer, new Vector(4, 1));
-          King king1 = new King(WhitePlayer, new Vector(5, 1));
-          Bishop bishop2 = new Bishop(WhitePlayer, new Vector(6, 1));
-          Knight knight2 = new Knight(WhitePlayer, new Vector(7, 1));
-          Rook rook2 = new Rook(WhitePlayer, new Vector(8, 1));
-          Pawn pawn1 = new Pawn(WhitePlayer, new Vector(1, 2));
-          Pawn pawn2 = new Pawn(WhitePlayer, new Vector(2, 2));
-          Pawn pawn3 = new Pawn(WhitePlayer, new Vector(3, 2));
-          Pawn pawn4 = new Pawn(WhitePlayer, new Vector(4, 2));
-          Pawn pawn5 = new Pawn(WhitePlayer, new Vector(5, 2));
-          Pawn pawn6 = new Pawn(WhitePlayer, new Vector(6, 2));
-          Pawn pawn7 = new Pawn(WhitePlayer, new Vector(7, 2));
-          Pawn pawn8 = new Pawn(WhitePlayer, new Vector(8, 2));
-          Rook rook3 = new Rook(BlackPlayer, new Vector(1, 8));
-          Knight knight3 = new Knight(BlackPlayer, new Vector(2, 8));
-          Bishop bishop3 = new Bishop(BlackPlayer, new Vector(3, 8));
-          Queen queen2 = new Queen(BlackPlayer, new Vector(4, 8));
-          King king2 = new King(BlackPlayer, new Vector(5, 8));
-          Bishop bishop4 = new Bishop(BlackPlayer, new Vector(6, 8));
-          Knight knight4 = new Knight(BlackPlayer, new Vector(7, 8));
-          Rook rook4 = new Rook(BlackPlayer, new Vector(8, 8));
-          Pawn pawn9 = new Pawn(BlackPlayer, new Vector(1, 7));
-          Pawn pawn10 = new Pawn(BlackPlayer, new Vector(2, 7));
-          Pawn pawn11 = new Pawn(BlackPlayer, new Vector(3, 7));
-          Pawn pawn12 = new Pawn(BlackPlayer, new Vector(4, 7));
-          Pawn pawn13 = new Pawn(BlackPlayer, new Vector(5, 7));
-          Pawn pawn14 = new Pawn(BlackPlayer, new Vector(6, 7));
-          Pawn pawn15 = new Pawn(BlackPlayer, new Vector(7, 7));
-          Pawn pawn16 = new Pawn(BlackPlayer, new Vector(8, 7));
-          this.ChessBoard = new Dictionary<Vector, Piece>
+            Rook rook1 = new Rook(WhitePlayer, new Vector(1, 1));
+            Knight knight1 = new Knight(WhitePlayer, new Vector(2, 1));
+            Bishop bishop1 = new Bishop(WhitePlayer, new Vector(3, 1));
+            Queen queen1 = new Queen(WhitePlayer, new Vector(4, 1));
+            King king1 = new King(WhitePlayer, new Vector(5, 1));
+            Bishop bishop2 = new Bishop(WhitePlayer, new Vector(6, 1));
+            Knight knight2 = new Knight(WhitePlayer, new Vector(7, 1));
+            Rook rook2 = new Rook(WhitePlayer, new Vector(8, 1));
+            Pawn pawn1 = new Pawn(WhitePlayer, new Vector(1, 2));
+            Pawn pawn2 = new Pawn(WhitePlayer, new Vector(2, 2));
+            Pawn pawn3 = new Pawn(WhitePlayer, new Vector(3, 2));
+            Pawn pawn4 = new Pawn(WhitePlayer, new Vector(4, 2));
+            Pawn pawn5 = new Pawn(WhitePlayer, new Vector(5, 2));
+            Pawn pawn6 = new Pawn(WhitePlayer, new Vector(6, 2));
+            Pawn pawn7 = new Pawn(WhitePlayer, new Vector(7, 2));
+            Pawn pawn8 = new Pawn(WhitePlayer, new Vector(8, 2));
+            Rook rook3 = new Rook(BlackPlayer, new Vector(1, 8));
+            Knight knight3 = new Knight(BlackPlayer, new Vector(2, 8));
+            Bishop bishop3 = new Bishop(BlackPlayer, new Vector(3, 8));
+            Queen queen2 = new Queen(BlackPlayer, new Vector(4, 8));
+            King king2 = new King(BlackPlayer, new Vector(5, 8));
+            Bishop bishop4 = new Bishop(BlackPlayer, new Vector(6, 8));
+            Knight knight4 = new Knight(BlackPlayer, new Vector(7, 8));
+            Rook rook4 = new Rook(BlackPlayer, new Vector(8, 8));
+            Pawn pawn9 = new Pawn(BlackPlayer, new Vector(1, 7));
+            Pawn pawn10 = new Pawn(BlackPlayer, new Vector(2, 7));
+            Pawn pawn11 = new Pawn(BlackPlayer, new Vector(3, 7));
+            Pawn pawn12 = new Pawn(BlackPlayer, new Vector(4, 7));
+            Pawn pawn13 = new Pawn(BlackPlayer, new Vector(5, 7));
+            Pawn pawn14 = new Pawn(BlackPlayer, new Vector(6, 7));
+            Pawn pawn15 = new Pawn(BlackPlayer, new Vector(7, 7));
+            Pawn pawn16 = new Pawn(BlackPlayer, new Vector(8, 7));
+            this.ChessBoard = new Dictionary<Vector, Piece>
             {
                 {rook1.Position, rook1},
                 {rook2.Position,rook2},
@@ -81,9 +82,12 @@ namespace Server
                 {pawn14.Position,pawn14},
                 {pawn15.Position,pawn15},
                 {pawn16.Position,pawn16}
-            }; 
-    }
-   
+            };
+            Users = users;
+            Users.Add(WhitePlayer);
+            Users.Add(BlackPlayer);
+        }
+
     }
 
 

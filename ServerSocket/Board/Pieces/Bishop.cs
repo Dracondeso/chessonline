@@ -13,14 +13,14 @@ namespace Server.Pieces
         public Bishop(User user, Vector Position) : base(user, Position)
         {
         }
-        public override void Move()
+        public override List<Vector> Move()
         {
             base.Move();
             this.North = 0;
             this.South = 0;
             this.East = 0;
             this.West = 0;
-            Core.MoveCreator(this);
+            return Core.Move(this.User);
         }
 
     }

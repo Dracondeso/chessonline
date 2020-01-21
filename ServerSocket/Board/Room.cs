@@ -12,8 +12,6 @@ namespace ChessOnline
         public string Name;
         public Board Board;
         public List<User> Users;
-        public User WhitePlayer;
-        public User BlackPlayer;
         public Room(string name)
         {
             this.Users = new List<User>();

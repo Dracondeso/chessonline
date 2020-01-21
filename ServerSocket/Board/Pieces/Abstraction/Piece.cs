@@ -10,8 +10,7 @@ namespace Server.Pieces.Abstraction
     public abstract class Piece : IMovable
     {
         public string Name => this.GetType().Name;
-        //    public string Dkey => $"#{Position.X} - {Position.Y} - {Side}";
-        public Vector Position { get; private set; }
+        public Vector Position { get;  set; }
         public Side Side { get; set; }
         public bool FirstMove { get; set; }
         public User User;
@@ -25,9 +24,13 @@ namespace Server.Pieces.Abstraction
         public double SouthEast;
         public double SouthWest;
         public double[] DirectionSteps;
-        public virtual void Move()
+        public virtual List<Vector> Move()
         {
+            if (this.Checks == null){
+
             this.Checks = new List<Vector>();
+            }
+            
             this.North = 8 - this.Position.Y;
             this.South = 0 + this.Position.Y;
             this.East = 8 - this.Position.X;
@@ -45,13 +48,11 @@ namespace Server.Pieces.Abstraction
             this.NorthWest = 1 - piecePosition;
             this.SouthEast = 8 - piecePosition;
             this.SouthWest = 1 - piecePosition;
+            return Core.Move(this.User);
         }
-
-
-
         public Piece(User user, Vector position)
         {
-            Side = user.Side;
+            User = user;
             Position = position;
             FirstMove = true;
         }
@@ -59,20 +60,3 @@ namespace Server.Pieces.Abstraction
     }
 }
 
-
-
-//public List<Vector> MoveChoose(Piece piece)
-//{
-//    switch (piece.Name)
-//    {
-//        case "Pawn":
-//            return piece.
-//        case "Bishop":
-//        case "Knight":
-//        case "Rook":
-//        case "Queen":
-//        case "King":
-//        default:
-//            break;
-//    }
-//   }

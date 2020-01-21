@@ -8,7 +8,7 @@ namespace Server.Pieces.Abstraction
 {
     public interface IMovable
     {
-        void Move();
+        List<Vector> Move();
 
     }
 

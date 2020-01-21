@@ -13,7 +13,7 @@ namespace Server.Pieces
         public Pawn(User user, Vector position) : base(user, position)
         {
         }
-        public override void Move()
+        public override List<Vector> Move()
         {
             base.Move();
             if (this.Side == Enum.Side.White)
@@ -106,6 +106,7 @@ namespace Server.Pieces
                     this.NorthWest = 0;
                 }
             }
+            return Core.Move(this.User);
         }
     }
 }

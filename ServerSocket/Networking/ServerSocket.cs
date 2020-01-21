@@ -80,6 +80,7 @@ public class AsynchronousSocketListener
 
         // Create the state object.  
         StateObject state = new StateObject();
+
         state.workSocket = handler;
         handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
             new AsyncCallback(ReadCallback), state);
@@ -107,23 +108,23 @@ public class AsynchronousSocketListener
             // more data.  
             dataRead = state.sb.ToString();
 
-            if (dataRead.IndexOf("<EOF>") > -1)
-            {
+            //if (dataRead.IndexOf("<EOF>") > -1)
+            //{
                 // All the data has been read from the   
                 // client. Display it on the console.  
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                     dataRead.Length, dataRead);
                 dataRead = Regex.Replace(dataRead, @"<EOF>", "");
-              string json= state.SerializedJson(Core.Elaborate(state.DeserializedJson(dataRead)));
+                User userRead = Core.DeserializedJson(dataRead);
+                Core.Elaborate(userRead, state);
                 // Echo the data back to the client.  
-                Send(handler, json);
-            }
-            else
-            {
-                // Not all data received. Get more.  
-                handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-                new AsyncCallback(ReadCallback), state);
-            }
+            //}
+            //else
+            //{
+            //    // Not all data received. Get more.  
+            //    handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+            //    new AsyncCallback(ReadCallback), state);
+            //}
         }
     }
 
@@ -147,8 +148,8 @@ public class AsynchronousSocketListener
             // Complete sending the data to the remote device.  
             int bytesSent = handler.EndSend(ar);
             Console.WriteLine("Sent {0} bytes to client.", bytesSent);
-
             handler.Shutdown(SocketShutdown.Both);
+
 
         }
         catch (Exception e)

@@ -8,6 +8,8 @@ using ChessOnline.Models;
 using ChessOnline.Networking;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System.Net.Sockets;
+using System.Text;
 
 namespace ChessOnline.Controllers
 {
@@ -17,7 +19,9 @@ namespace ChessOnline.Controllers
         private string DbUser1 = "user1";
         private string DbPsw2 = "1234";
         private string DbUser2 = "user2";
-        public IActionResult LogIn(User user)
+        public Socket SocketClient;
+        HomeController Controller;
+         public IActionResult LogIn(User user)
         {
             return View();
         }//LoginPage for insert Username and Password
@@ -25,6 +29,10 @@ namespace ChessOnline.Controllers
         {
             if (LogInControl(user))
             {
+
+                string json = JsonConvert.SerializeObject(user);
+                AsynchronousClient.Send(AsynchronousClient.StartClient(), json);
+     
                 return View();
             }
             else
@@ -45,9 +53,14 @@ namespace ChessOnline.Controllers
             }
             return false;
         }//Check if exists UserName and Password
+
         public IActionResult WaitingPage(User user)
         {
-            return View();
+            while (user.Side == null)
+            {
+                return View();
+            }
+            return View("ChessBoard");
         }
         public IActionResult ChessBoard()
         {
@@ -66,5 +79,6 @@ namespace ChessOnline.Controllers
         {
            // User 
         }
+
     }
 }

@@ -13,14 +13,15 @@ namespace Server.Pieces
         public Rook(User user, Vector position) : base(user, position)
         {
         }
-         public override void Move()
+         public override List<Vector> Move()
         {
             base.Move();
             this.NorthEast = 0;
             this.NorthWest = 0;
             this.SouthEast = 0;
             this.SouthWest = 0;
-            Core.MoveCreator(this);
+            return Core.Move(this.User);
+            
         }
 
 

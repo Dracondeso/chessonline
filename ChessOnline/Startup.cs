@@ -34,7 +34,6 @@ namespace ChessOnline
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);//add and set model view control (mvc) version
             //services.AddScoped<ConnectionStart>();
             services.AddTransient<LogInMiddleware>();//add LogInMiddleware
-            services.AddTransient<WaitingMiddleware>();//add WaitingMiddleware
         } // add services at startup
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +54,6 @@ namespace ChessOnline
             app.UseCookiePolicy();
             //app.UseMiddleware<ConnectionStart>();
             app.UseMiddleware<LogInMiddleware>();
-            app.UseMiddleware<WaitingMiddleware>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

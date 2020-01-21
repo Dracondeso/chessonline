@@ -17,6 +17,7 @@ namespace ChessOnline
         public Vector StartPosition;
         public Vector EndPosition;
         public StateObject StateObject;
+        public bool YourTurn { get; set; }
 
         public Side Side { get; set; }
         public Room Room { get; set; }

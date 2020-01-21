@@ -15,10 +15,11 @@ namespace ChessOnline
         public string Password { get; set; }
         public Side Side { get; set; }
         public Room Room { get; private set; }
+        public bool YourTurn { get; set; }
+
         public User() { }
         public Vector StartPosition;
         public Vector EndPosition;
-        public StateObject StateObject;
         public void SetRoomKey(Room room, Side side)
         {
             this.Side = side;
@@ -37,10 +38,6 @@ namespace ChessOnline
         public override string ToString()
         {
             return "UserName= " + this.UserName + " Password= " + this.Password;
-        }
-        public void SetStateObject(StateObject stateObject)
-        {
-            this.StateObject = stateObject;
         }
     }
 }
