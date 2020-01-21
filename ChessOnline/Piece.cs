@@ -5,17 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Pieces.Abstraction
+namespace ChessOnline
 {
     public abstract class Piece : IMovable
     {
         public string Name => this.GetType().Name;
-        //    public string Dkey => $"#{Position.X} - {Position.Y} - {Side}";
-        public Vector Position { get; private set; }
+        public Vector StartPosition { get; set; }
+        public Vector EndPosition { get; set; }
         public Side Side { get; set; }
         public bool FirstMove { get; set; }
-        public User User;
         public List<Vector> Checks;
+        public Board Board;
+        public double[] DirectionSteps;
         public double North;
         public double South;
         public double East;
@@ -24,55 +25,43 @@ namespace Server.Pieces.Abstraction
         public double NorthWest;
         public double SouthEast;
         public double SouthWest;
-        public double[] DirectionSteps;
-        public virtual void Move()
+
+        public Piece(Side side, Vector startPosition, Board board)
         {
-            this.Checks = new List<Vector>();
-            this.North = 8 - this.Position.Y;
-            this.South = 0 + this.Position.Y;
-            this.East = 8 - this.Position.X;
-            this.West = 0 + this.Position.X;
+            this.Board = board;
+            Side = side;
+            StartPosition = startPosition;
+            FirstMove = true;
+        }
+        public virtual List<Vector> Move()
+        {
+            if (this.Checks == null)
+            {
+
+                this.Checks = new List<Vector>();
+            }
+            this.Checks.Clear();
+
+            this.North = 8 - this.StartPosition.Y;
+            this.South = 0 + this.StartPosition.Y;
+            this.East = 8 - this.StartPosition.X;
+            this.West = 0 + this.StartPosition.X;
             double piecePosition;
-            if (this.Position.X <= this.Position.Y)
-            { 
-                piecePosition = this.Position.X; 
+            if (this.StartPosition.X <= this.StartPosition.Y)
+            {
+                piecePosition = this.StartPosition.X;
             }
             else
             {
-                piecePosition = Position.Y;
+                piecePosition = StartPosition.Y;
             }
             this.NorthEast = 8 - piecePosition;
             this.NorthWest = 1 - piecePosition;
             this.SouthEast = 8 - piecePosition;
             this.SouthWest = 1 - piecePosition;
-        }
-
-
-
-        public Piece(User user, Vector position)
-        {
-            Side = user.Side;
-            Position = position;
-            FirstMove = true;
+            return Checks;
         }
 
     }
 }
 
-
-
-//public List<Vector> MoveChoose(Piece piece)
-//{
-//    switch (piece.Name)
-//    {
-//        case "Pawn":
-//            return piece.
-//        case "Bishop":
-//        case "Knight":
-//        case "Rook":
-//        case "Queen":
-//        case "King":
-//        default:
-//            break;
-//    }
-//   }

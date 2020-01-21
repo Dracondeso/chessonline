@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Math.Tools.Primitives;
-using Server.Pieces.Abstraction;
-using Server.Pieces;
 using ChessOnline;
 
-namespace Server
+namespace ChessOnline
 {
     public class Board
     {

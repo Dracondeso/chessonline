@@ -1,6 +1,7 @@
 ﻿using Math.Tools.Primitives;
 using Server.Enum;
 using Server.Networking;
+using Server.Pieces.Abstraction;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -14,16 +15,17 @@ namespace ChessOnline
         public string UserName { get; set; }
         public string Password { get; set; }
         public Side Side { get; set; }
-        public Room Room { get; private set; }
         public bool YourTurn { get; set; }
-
+        public Dictionary<Vector, Piece> ChessBoard;
         public User() { }
         public Vector StartPosition;
         public Vector EndPosition;
+        public string RoomKey;
         public void SetRoomKey(Room room, Side side)
         {
+            this.ChessBoard = room.Board.ChessBoard;
             this.Side = side;
-            this.Room = room;
+            this.RoomKey = room.Name;
         }
         public void SetUser(User user)
         {

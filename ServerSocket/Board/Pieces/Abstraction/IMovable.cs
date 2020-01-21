@@ -13,4 +13,3 @@ namespace Server.Pieces.Abstraction
     }
 
 }
-//uble north, double south, double east, double west, double northEast, double northWest, double southEast, double southWest

@@ -14,6 +14,7 @@ namespace ChessOnline
         public List<User> Users;
         public Room(string name)
         {
+            this.Board = new Board();
             this.Users = new List<User>();
             this.Name = name;
         }

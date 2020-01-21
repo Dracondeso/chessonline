@@ -21,9 +21,9 @@ namespace Server.Networking
 
 
 
-        public void SetUser(User user)
+        public void SetStateObject(User user)
         {
-            this.User = User;
+            this.User = user;
 
         }
     }

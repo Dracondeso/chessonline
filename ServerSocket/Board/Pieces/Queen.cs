@@ -10,13 +10,13 @@ namespace Server.Pieces
 {
     public class Queen : Piece
     {
-        public Queen(User user, Vector position) : base(user, position)
+        public Queen(Side side, Vector position, Board board) : base(side, position, board)
         {
         }
         public override List<Vector> Move()
         {
             base.Move();
-            return Core.Move(this.User);
+            return Core.Behavior(this.StartPosition,this.Board);
         }
 
     }

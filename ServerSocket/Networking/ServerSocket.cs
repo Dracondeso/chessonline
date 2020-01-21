@@ -114,8 +114,7 @@ public class AsynchronousSocketListener
                 // client. Display it on the console.  
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                     dataRead.Length, dataRead);
-                dataRead = Regex.Replace(dataRead, @"<EOF>", "");
-                User userRead = Core.DeserializedJson(dataRead);
+            User userRead = JsonConvert.DeserializeObject<User>(dataRead);
                 Core.Elaborate(userRead, state);
                 // Echo the data back to the client.  
             //}

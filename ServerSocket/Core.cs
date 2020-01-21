@@ -15,6 +15,40 @@ namespace Server
     {
         private static List<Room> Rooms = new List<Room>();
         private static Dictionary<User, StateObject> StateObjects = new Dictionary<User, StateObject>();
+        public static void Elaborate(User user, StateObject state)
+        {
+            if (user.YourTurn = true)
+            {
+                if (user.RoomKey == null)
+                {
+                    Core.AssignRoom(user);
+                    state.SetStateObject(user);
+                    return;
+                }
+                else
+                {
+                    Board board = FindLoggedUserBoard(user, out Room thisRoom);
+                    foreach (Vector check in FindPiece(user.StartPosition, board).Move())
+                    {
+                        if (check.Equals(user.EndPosition))
+                        {
+                            foreach (User user1 in thisRoom.Users)
+                            {
+                                if (user != user1)
+                                {
+                                    Console.WriteLine("Mossa Consentita");
+                                    SendMove(user, user1, thisRoom);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Non e` il tuo turno");
+            }
+        }
         public static User AssignRoom(User user)
         {
             if (Rooms.Count == 0)
@@ -28,20 +62,19 @@ namespace Server
             }
             foreach (Room room in Rooms)
             {
-                    if (room.Users.Count == 1)
-                    {
-                        user.SetRoomKey(room, Enum.Side.Black);
-                        user.YourTurn = false;
-                        room.Users.Add(user);
-                        room.Board = new Board(room.Users);
-                    string jsonWhite = JsonConvert.SerializeObject(room.Users[0]); 
+                if (room.Users.Count == 1)
+                {
+                    user.SetRoomKey(room, Enum.Side.Black);
+                    user.YourTurn = false;
+                    room.Users.Add(user);
+                    string jsonWhite = JsonConvert.SerializeObject(room.Users[0]);
                     string jsonBlack = JsonConvert.SerializeObject(room.Users[1]);
                     StateObjects.TryGetValue(room.Users[0], out StateObject white);
                     StateObjects.TryGetValue(room.Users[1], out StateObject black);
                     AsynchronousSocketListener.Send(white.workSocket, jsonWhite);
                     AsynchronousSocketListener.Send(black.workSocket, jsonBlack);
-                        return user;
-                    }
+                    return user;
+                }
             }
             string roomName = $"room{Rooms.Count}";
             Room room2 = new Room(roomName);
@@ -50,39 +83,10 @@ namespace Server
             room2.Users.Add(user);
             return user;
         }
-        public static void Elaborate(User user, StateObject state)
+        public static void SendMove(User userTurn, User otherUser, Room room)
         {
-            if (Core.GetStateObject(user) == null)
-            {
-                Core.AssignRoom(user);
-                state.SetUser(user);
-                return;
-            }
-            else
-            {
-                ;
-
-                Dictionary<Vector, Piece> board = FindLoggedUserBoard(user);
-                foreach (Vector check in FindPiece(user).Move())
-                {
-                    if (check.Equals(user.EndPosition))
-                    {
-                        foreach (User user1 in user.Room.Users)
-                        {
-                            if (user != user1)
-                            {
-                                SendMove(user, user1);
-                                Console.WriteLine("Mossa Consentita");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        public static void SendMove(User userTurn, User otherUser)
-        {
-            RefreshBoard(userTurn, userTurn.Room.Board.ChessBoard);
-            otherUser.Room.Board.ChessBoard = userTurn.Room.Board.ChessBoard;
+            UpdateBoard(userTurn, room);
+            otherUser.ChessBoard = userTurn.ChessBoard;
             StateObjects.TryGetValue(userTurn, out StateObject objectTurn);
             StateObjects.TryGetValue(otherUser, out StateObject otherObject);
             userTurn.YourTurn = false;
@@ -94,7 +98,7 @@ namespace Server
             AsynchronousSocketListener.Send(otherObject.workSocket, otherJson);
 
         }
-        public static Dictionary<Vector, Piece> FindLoggedUserBoard(User user)
+        public static Board FindLoggedUserBoard(User user, out Room thisRoom)
         {
             foreach (Room room in Rooms)
             {
@@ -102,10 +106,12 @@ namespace Server
                 {
                     if (userInList.UserName == user.UserName)
                     {
-                        return room.Board.ChessBoard;
+                        thisRoom = room;
+                        return room.Board;
                     }
                 }
             }
+            thisRoom = null;
             return null;
         }
         private static Vector Cardinal(Direction direction, Vector position, double increment)
@@ -152,17 +158,18 @@ namespace Server
                 return null;
 
         }
-        public static Dictionary<Vector, Piece> RefreshBoard(User user, Dictionary<Vector, Piece> board)
+        public static Dictionary<Vector, Piece> UpdateBoard(User user, Room room)
         {
-            board.TryGetValue(user.StartPosition, out Piece piece);
-            board.Remove(user.StartPosition);
-            board.Remove(user.EndPosition);
-            board.Add(user.EndPosition, piece);
-            return board;
+            user.ChessBoard.TryGetValue(user.StartPosition, out Piece piece);
+            user.ChessBoard.Remove(user.StartPosition);
+            user.ChessBoard.Remove(user.EndPosition);
+            user.ChessBoard.Add(user.EndPosition, piece);
+            room.Board.ChessBoard = user.ChessBoard;
+            return user.ChessBoard;
         }
-        public static List<Vector> Move(User user)
+        public static List<Vector> Behavior(Vector startPosition, Board board)
         {
-            Piece piece = FindPiece(user);
+            Piece piece = FindPiece(startPosition, board);
             for (double i = 0; i == 8; i++)
             {
                 Enum.Direction direction1 = (Enum.Direction)i;
@@ -170,46 +177,33 @@ namespace Server
                 {
                     for (double j = 1; j <= piece.DirectionSteps[(int)i]; j++)
                     {
-                        if (user.Room.Board.ChessBoard.ContainsKey(Cardinal(direction1, piece.User.StartPosition, j)))
+                        if (board.ChessBoard.ContainsKey(Cardinal(direction1, startPosition, j)))
                         {
-                            user.Room.Board.ChessBoard.TryGetValue(Cardinal(direction1, piece.User.StartPosition, j), out Piece piece1);
-                            user.Room.Board.ChessBoard.TryGetValue(piece.User.StartPosition, out Piece piece2);
+                            board.ChessBoard.TryGetValue(Cardinal(direction1, startPosition, j), out Piece piece1);
+                            board.ChessBoard.TryGetValue(startPosition, out Piece piece2);
                             if ((piece1.Side == piece2.Side) || (piece2.Name.Equals(Enum.PieceType.King)))
                             {
                                 break;
                             }
                             else
                             {
-                                piece.Checks.Add(Cardinal(direction1, piece.User.StartPosition, i));
+                                piece.Checks.Add(Cardinal(direction1, startPosition, i));
                                 break;
                             }
                         }
-                        piece.Checks.Add(Cardinal(direction1, piece.User.StartPosition, i));
+                        piece.Checks.Add(Cardinal(direction1, startPosition, i));
                     }
                 }
             }
             return piece.Checks;
         }
-        public static void ClearListVector(User user)
-        {
-            user.Room.Board.ChessBoard.Clear();
 
-        }
-        public static Piece FindPiece(User user)
+        public static Piece FindPiece(Vector startPosition, Board board)
         {
-            user.Room.Board.ChessBoard.TryGetValue(user.StartPosition, out Piece piece);
+            board.ChessBoard.TryGetValue(startPosition, out Piece piece);
             return piece;
         }
-        public static User DeserializedJson(string stringToConvert)
-        {
-            User user = JsonConvert.DeserializeObject<User>(stringToConvert);
-            return user;
-        }
-        public static string SerializedJson(User user)
 
-        {
-            return JsonConvert.SerializeObject(user);
-        }
 
     }
 

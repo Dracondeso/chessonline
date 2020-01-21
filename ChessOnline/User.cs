@@ -6,27 +6,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using ChessOnline;
 namespace ChessOnline
 {
     public class User
     {
         public string UserName { get; set; }
         public string Password { get; set; }
+        public Side Side { get; set; }
+        public bool YourTurn { get; set; }
+        public Dictionary<Vector, Piece> ChessBoard;
         public User() { }
         public Vector StartPosition;
         public Vector EndPosition;
-        public StateObject StateObject;
-        public bool YourTurn { get; set; }
-
-        public Side Side { get; set; }
-        public Room Room { get; set; }
-
-        public Side side { get; set; }
+        public string RoomKey;
         public void SetRoomKey(Room room, Side side)
         {
             this.Side = side;
-            this.Room = room;
+            this.RoomKey = room.Name;
         }
         public void SetUser(User user)
         {
@@ -42,9 +39,6 @@ namespace ChessOnline
         {
             return "UserName= " + this.UserName + " Password= " + this.Password;
         }
-        public void SetStateObject(StateObject stateObject)
-        {
-            this.StateObject = stateObject;
-        }
+   
     }
 }

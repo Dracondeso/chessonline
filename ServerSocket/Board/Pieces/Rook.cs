@@ -10,7 +10,7 @@ namespace Server.Pieces
 {
     public class Rook : Piece
     {
-        public Rook(User user, Vector position) : base(user, position)
+        public Rook(Side side, Vector position, Board board) : base(side, position, board)
         {
         }
          public override List<Vector> Move()
@@ -20,7 +20,7 @@ namespace Server.Pieces
             this.NorthWest = 0;
             this.SouthEast = 0;
             this.SouthWest = 0;
-            return Core.Move(this.User);
+            return Core.Behavior(this.StartPosition,this.Board);
             
         }
 

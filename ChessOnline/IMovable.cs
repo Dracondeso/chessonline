@@ -4,13 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Pieces.Abstraction
+namespace ChessOnline
 {
     public interface IMovable
     {
-        void Move();
+        List<Vector> Move();
 
     }
 
 }
-//uble north, double south, double east, double west, double northEast, double northWest, double southEast, double southWest

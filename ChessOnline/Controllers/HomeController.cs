@@ -20,7 +20,6 @@ namespace ChessOnline.Controllers
         private string DbPsw2 = "1234";
         private string DbUser2 = "user2";
         public Socket SocketClient;
-        HomeController Controller;
          public IActionResult LogIn(User user)
         {
             return View();
@@ -56,15 +55,17 @@ namespace ChessOnline.Controllers
 
         public IActionResult WaitingPage(User user)
         {
-            while (user.Side == null)
+         
+                return View();
+            
+        }
+        public IActionResult ChessBoard(User user)
+        {
+            while (user.Side != null)
             {
                 return View();
             }
-            return View("ChessBoard");
-        }
-        public IActionResult ChessBoard()
-        {
-            return View();
+            return View("WaitingPage");
         }//ChessBoard for admitted player
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
